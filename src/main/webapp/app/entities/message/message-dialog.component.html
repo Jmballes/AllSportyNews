@@ -1,0 +1,119 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myMessageLabel" jhiTranslate="allSportyNewsApp.message.home.createOrEditLabel">Create or edit a Message</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!message.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="message.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="allSportyNewsApp.message.title" for="field_title">Title</label>
+            <input type="text" class="form-control" name="title" id="field_title"
+                [(ngModel)]="message.title" required/>
+            <div [hidden]="!(editForm.controls.title?.dirty && editForm.controls.title?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.title?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="allSportyNewsApp.message.url" for="field_url">Url</label>
+            <input type="text" class="form-control" name="url" id="field_url"
+                [(ngModel)]="message.url" required/>
+            <div [hidden]="!(editForm.controls.url?.dirty && editForm.controls.url?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.url?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="allSportyNewsApp.message.description" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                [(ngModel)]="message.description" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="allSportyNewsApp.message.fecha" for="field_fecha">Fecha</label>
+            <div class="input-group">
+                <input id="field_fecha" type="text" class="form-control" name="fecha" ngbDatepicker  #fechaDp="ngbDatepicker" [(ngModel)]="message.fecha"
+                />
+                <span class="input-group-append">
+                    <button type="button" class="btn btn-secondary" (click)="fechaDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="allSportyNewsApp.message.imagen" for="field_imagen">Imagen</label>
+            <div>
+                <div *ngIf="message.imagen" class="form-text text-danger clearfix">
+                    <a class="pull-left" (click)="openFile(message.imagenContentType, message.imagen)" jhiTranslate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{message.imagenContentType}}, {{byteSize(message.imagen)}}</span>
+                    <button type="button" (click)="message.imagen=null;message.imagenContentType=null;"
+                            class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_imagen" (change)="setFileData($event, message, 'imagen', false)" jhiTranslate="entity.action.addblob"/>
+            </div>
+            <input type="hidden" class="form-control" name="imagen" id="field_imagen"
+                [(ngModel)]="message.imagen" required/>
+            <input type="hidden" class="form-control" name="imagenContentType" id="field_imagenContentType"
+                [(ngModel)]="message.imagenContentType" />
+            <div [hidden]="!(editForm.controls.imagen?.dirty && editForm.controls.imagen?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.imagen?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="allSportyNewsApp.message.author" for="field_author">Author</label>
+            <select class="form-control" id="field_author" name="author" [(ngModel)]="message.author"  required>
+                <option *ngIf="!editForm.value.author" [ngValue]="null" selected></option>
+                <option [ngValue]="userOption.id === message.author?.id ? message.author : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.author?.dirty && editForm.controls.author?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.author?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="allSportyNewsApp.message.category" for="field_category">Category</label>
+            <select class="form-control" id="field_category" name="category" [(ngModel)]="message.category"  required>
+                <option *ngIf="!editForm.value.category" [ngValue]="null" selected></option>
+                <option [ngValue]="categoryOption.id === message.category?.id ? message.category : categoryOption" *ngFor="let categoryOption of categories; trackBy: trackCategoryById">{{categoryOption.id}}</option>
+            </select>
+        </div>
+        <div [hidden]="!(editForm.controls.category?.dirty && editForm.controls.category?.invalid)">
+            <small class="form-text text-danger"
+                [hidden]="!editForm.controls.category?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="allSportyNewsApp.message.parent" for="field_parent">Parent</label>
+            <select class="form-control" id="field_parent" name="parent" [(ngModel)]="message.parent" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="messageOption.id === message.parent?.id ? message.parent : messageOption" *ngFor="let messageOption of messages; trackBy: trackMessageById">{{messageOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

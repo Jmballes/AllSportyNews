@@ -1,0 +1,61 @@
+
+<div *ngIf="message">
+    <h2><span jhiTranslate="allSportyNewsApp.message.detail.title">Message</span> {{message.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="allSportyNewsApp.message.title">Title</span></dt>
+        <dd>
+            <span>{{message.title}}</span>
+        </dd>
+        <dt><span jhiTranslate="allSportyNewsApp.message.url">Url</span></dt>
+        <dd>
+            <span>{{message.url}}</span>
+        </dd>
+        <dt><span jhiTranslate="allSportyNewsApp.message.description">Description</span></dt>
+        <dd>
+            <span>{{message.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="allSportyNewsApp.message.fecha">Fecha</span></dt>
+        <dd>
+            <span>{{message.fecha | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="allSportyNewsApp.message.imagen">Imagen</span></dt>
+        <dd>
+            <div *ngIf="message.imagen">
+                <a (click)="openFile(message.imagenContentType, message.imagen)" jhiTranslate="entity.action.open">open</a>
+                {{message.imagenContentType}}, {{byteSize(message.imagen)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="allSportyNewsApp.message.author">Author</span></dt>
+        <dd>
+            {{message.author?.id}}
+        </dd>
+        <dt><span jhiTranslate="allSportyNewsApp.message.category">Category</span></dt>
+        <dd>
+            <div *ngIf="message.category">
+                <a [routerLink]="['/category', message.category?.id]">{{message.category?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="allSportyNewsApp.message.parent">Parent</span></dt>
+        <dd>
+            <div *ngIf="message.parent">
+                <a [routerLink]="['/message', message.parent?.id]">{{message.parent?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'message/'+ message.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
