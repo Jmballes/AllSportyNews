@@ -3,8 +3,8 @@
     "allSportyNewsApp": {
         "category" : {
             "home": {
-                "title": "Categories",
-                "createLabel": "Crear nuevo Category",
+                "title": "Categorias",
+                "createLabel": "Crear Categorias",
                 "createOrEditLabel": "Crear o editar Category",
                 "search": "Search for Category"
             },

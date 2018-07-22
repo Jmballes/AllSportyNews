@@ -17,6 +17,7 @@
             "detail": {
                 "title": "Points"
             },
+            "fecha": "Fecha",
             "person": "Person",
             "message": "Message"
         }

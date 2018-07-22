@@ -29,6 +29,13 @@ export class PointsPopupService {
                 this.pointsService.find(id)
                     .subscribe((pointsResponse: HttpResponse<Points>) => {
                         const points: Points = pointsResponse.body;
+                        if (points.fecha) {
+                            points.fecha = {
+                                year: points.fecha.getFullYear(),
+                                month: points.fecha.getMonth() + 1,
+                                day: points.fecha.getDate()
+                            };
+                        }
                         this.ngbModalRef = this.pointsModalRef(component, points);
                         resolve(this.ngbModalRef);
                     });

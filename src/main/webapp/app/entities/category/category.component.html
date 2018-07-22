@@ -25,58 +25,81 @@
         </div>
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="categories">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="allSportyNewsApp.category.title">Title</span></th>
-            <th><span jhiTranslate="allSportyNewsApp.category.description">Description</span></th>
-            <th><span jhiTranslate="allSportyNewsApp.category.imagen">Imagen</span></th>
-            <th><span jhiTranslate="allSportyNewsApp.category.author">Author</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let category of categories ;trackBy: trackId">
-                <td><a [routerLink]="['../category', category.id ]">{{category.id}}</a></td>
-                <td>{{category.title}}</td>
-                <td>{{category.description}}</td>
-                <td>
-                    <a *ngIf="category.imagen" (click)="openFile(category.imagenContentType, category.imagen)" jhiTranslate="entity.action.open">open</a>
-                    <span *ngIf="category.imagen">{{category.imagenContentType}}, {{byteSize(category.imagen)}}</span>
-                </td>
-                <td>
-                    {{category.author?.id}}
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../category', category.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/edit'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+        <div *ngIf="categories">
+        <div class="list-group">
+         	<a [routerLink]="['../category', category.id ]"
+         		class="list-group-item list-group-item-action flex-column
+          		align-items-start" 
+          		*ngFor="let category of categories; trackBy: trackId"> 
+                <div class="row">
+                <div class="col-2 col-xs-12 justify-content-center">
+                	<img [src]="'data:image/png;base64,' + category.imagen"
+                		style="max-height:150px;max-width:150px" alt="category imagen"/>
+                 </div>
+                 <div class="col col-xs-12">
+                 <div class="d-flex w-100 justify-content-between">
+          			<h5 class="mb-1">{{category.title}}</h5>
+          			
+          		</div>
+          		<small class="mb-1">{{category.description}}</small>
+          		<p class="mb-1">Autor: {{category.author?.login}}</p>
+          		</div>
+          		</div>
+          	</a>
+          </div>
+     </div>
+<!--     <div class="table-responsive" *ngIf="categories"> -->
+<!--         <table class="table table-striped"> -->
+<!--             <thead> -->
+<!--             <tr> -->
+<!--             <th><span jhiTranslate="global.field.id">ID</span></th> -->
+<!--             <th><span jhiTranslate="allSportyNewsApp.category.title">Title</span></th> -->
+<!--             <th><span jhiTranslate="allSportyNewsApp.category.description">Description</span></th> -->
+<!--             <th><span jhiTranslate="allSportyNewsApp.category.imagen">Imagen</span></th> -->
+<!--             <th><span jhiTranslate="allSportyNewsApp.category.author">Author</span></th> -->
+<!--             <th></th> -->
+<!--             </tr> -->
+<!--             </thead> -->
+<!--             <tbody> -->
+<!--             <tr *ngFor="let category of categories ;trackBy: trackId"> -->
+<!--                 <td><a [routerLink]="['../category', category.id ]">{{category.id}}</a></td> -->
+<!--                 <td>{{category.title}}</td> -->
+<!--                 <td>{{category.description}}</td> -->
+<!--                 <td> -->
+<!--                     <a *ngIf="category.imagen" (click)="openFile(category.imagenContentType, category.imagen)" jhiTranslate="entity.action.open">open</a> -->
+<!--                     <span *ngIf="category.imagen">{{category.imagenContentType}}, {{byteSize(category.imagen)}}</span> -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                     {{category.author?.id}} -->
+<!--                 </td> -->
+<!--                 <td class="text-right"> -->
+<!--                     <div class="btn-group flex-btn-group-container"> -->
+<!--                         <button type="submit" -->
+<!--                                 [routerLink]="['../category', category.id ]" -->
+<!--                                 class="btn btn-info btn-sm"> -->
+<!--                             <span class="fa fa-eye"></span> -->
+<!--                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span> -->
+<!--                         </button> -->
+<!--                         <button type="submit" -->
+<!--                                 [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/edit'} }]" -->
+<!--                                 replaceUrl="true" -->
+<!--                                 queryParamsHandling="merge" -->
+<!--                                 class="btn btn-primary btn-sm"> -->
+<!--                             <span class="fa fa-pencil"></span> -->
+<!--                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span> -->
+<!--                         </button> -->
+<!--                         <button type="submit" -->
+<!--                                 [routerLink]="['/', { outlets: { popup: 'category/'+ category.id + '/delete'} }]" -->
+<!--                                 replaceUrl="true" -->
+<!--                                 queryParamsHandling="merge" -->
+<!--                                 class="btn btn-danger btn-sm"> -->
+<!--                             <span class="fa fa-remove"></span> -->
+<!--                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span> -->
+<!--                         </button> -->
+<!--                     </div> -->
+<!--                 </td> -->
+<!--             </tr> -->
+<!--             </tbody> -->
+<!--         </table> -->
+<!--     </div> -->
 </div>

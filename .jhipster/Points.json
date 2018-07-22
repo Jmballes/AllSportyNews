@@ -16,7 +16,12 @@
             "otherEntityField": "id"
         }
     ],
-    "fields": [],
+    "fields": [
+        {
+            "fieldName": "fecha",
+            "fieldType": "LocalDate"
+        }
+    ],
     "changelogDate": "20180524151935",
     "entityTableName": "points",
     "dto": "no",

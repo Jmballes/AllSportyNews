@@ -1,6 +1,7 @@
 package com.jmbo.sporty.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
 import com.jmbo.sporty.domain.Category;
 
 import com.jmbo.sporty.repository.CategoryRepository;
@@ -8,10 +9,22 @@ import com.jmbo.sporty.repository.search.CategorySearchRepository;
 import com.jmbo.sporty.web.rest.errors.BadRequestAlertException;
 import com.jmbo.sporty.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+
+import org.elasticsearch.common.inject.Inject;
+import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.Criteria;
+import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -138,11 +151,22 @@ public class CategoryResource {
      */
     @GetMapping("/_search/categories")
     @Timed
-    public List<Category> searchCategories(@RequestParam String query) {
+    public List<Category> searchCategories2(@RequestParam String query) {
         log.debug("REST request to search Categories for query {}", query);
-        return StreamSupport
-            .stream(categorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+        Criteria c = new Criteria("description").fuzzy(query);
+        return elasticsearchTemplate.queryForList(new CriteriaQuery(c), Category.class);
+//        return StreamSupport
+//            .stream(categorySearchRepository.search(queryStringQuery(query)).spliterator(), false)
+//            .collect(Collectors.toList());
     }
+    
 
+    @Autowired
+    protected ElasticsearchTemplate elasticsearchTemplate;
+
+    
+    public List<Category> findFuzzyBySearchTerm(String searchTerm) {
+        Criteria c = new Criteria("name").fuzzy(searchTerm);
+        return elasticsearchTemplate.queryForList(new CriteriaQuery(c), Category.class);
+    }
 }

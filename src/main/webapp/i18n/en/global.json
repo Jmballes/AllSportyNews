@@ -10,6 +10,7 @@
                 "category": "Category",
                 "message": "Message",
                 "points": "Points",
+                "extendedUser": "Extended User",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

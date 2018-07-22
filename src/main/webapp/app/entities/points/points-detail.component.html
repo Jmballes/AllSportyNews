@@ -4,6 +4,10 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="allSportyNewsApp.points.fecha">Fecha</span></dt>
+        <dd>
+            <span>{{points.fecha | date:'mediumDate'}}</span>
+        </dd>
         <dt><span jhiTranslate="allSportyNewsApp.points.person">Person</span></dt>
         <dd>
             {{points.person?.id}}

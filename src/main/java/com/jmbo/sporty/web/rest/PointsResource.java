@@ -5,6 +5,8 @@ import com.jmbo.sporty.domain.Points;
 import com.jmbo.sporty.service.PointsService;
 import com.jmbo.sporty.web.rest.errors.BadRequestAlertException;
 import com.jmbo.sporty.web.rest.util.HeaderUtil;
+import com.jmbo.sporty.web.rest.vm.PointsPerWeek;
+
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -134,4 +136,11 @@ public class PointsResource {
         return pointsService.search(query);
     }
 
+    @GetMapping("/points-this-week")
+    @Timed
+    public ResponseEntity<PointsPerWeek> getPointsThisWeek(){
+
+    	return pointsService.getPointsFromMeThisWeek();
+    }
+    
 }

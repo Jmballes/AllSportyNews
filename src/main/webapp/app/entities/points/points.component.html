@@ -30,6 +30,7 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="allSportyNewsApp.points.fecha">Fecha</span></th>
             <th><span jhiTranslate="allSportyNewsApp.points.person">Person</span></th>
             <th><span jhiTranslate="allSportyNewsApp.points.message">Message</span></th>
             <th></th>
@@ -38,12 +39,13 @@
             <tbody>
             <tr *ngFor="let points of points ;trackBy: trackId">
                 <td><a [routerLink]="['../points', points.id ]">{{points.id}}</a></td>
+                <td>{{points.fecha | date:'mediumDate'}}</td>
                 <td>
-                    {{points.person?.id}}
+                    {{points.person?.login}}
                 </td>
                 <td>
                     <div *ngIf="points.message">
-                        <a [routerLink]="['../message', points.message?.id ]" >{{points.message?.id}}</a>
+                        <a [routerLink]="['../message', points.message?.id ]" >{{points.message?.title}}</a>
                     </div>
                 </td>
                 <td class="text-right">

@@ -25,76 +25,182 @@
         </div>
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="messages">
-        <table class="table table-striped">
-            <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="title"><span jhiTranslate="allSportyNewsApp.message.title">Title</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="url"><span jhiTranslate="allSportyNewsApp.message.url">Url</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="description"><span jhiTranslate="allSportyNewsApp.message.description">Description</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="fecha"><span jhiTranslate="allSportyNewsApp.message.fecha">Fecha</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="imagen"><span jhiTranslate="allSportyNewsApp.message.imagen">Imagen</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="author.id"><span jhiTranslate="allSportyNewsApp.message.author">Author</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="category.id"><span jhiTranslate="allSportyNewsApp.message.category">Category</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="parent.id"><span jhiTranslate="allSportyNewsApp.message.parent">Parent</span> <span class="fa fa-sort"></span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let message of messages ;trackBy: trackId">
-                <td><a [routerLink]="['../message', message.id ]">{{message.id}}</a></td>
-                <td>{{message.title}}</td>
-                <td>{{message.url}}</td>
-                <td>{{message.description}}</td>
-                <td>{{message.fecha | date:'mediumDate'}}</td>
-                <td>
-                    <a *ngIf="message.imagen" (click)="openFile(message.imagenContentType, message.imagen)" jhiTranslate="entity.action.open">open</a>
-                    <span *ngIf="message.imagen">{{message.imagenContentType}}, {{byteSize(message.imagen)}}</span>
-                </td>
-                <td>
-                    {{message.author?.id}}
-                </td>
-                <td>
-                    <div *ngIf="message.category">
-                        <a [routerLink]="['../category', message.category?.id ]" >{{message.category?.id}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="message.parent">
-                        <a [routerLink]="['../message', message.parent?.id ]" >{{message.parent?.id}}</a>
-                    </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../message', message.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'message/'+ message.id + '/edit'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'message/'+ message.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+<!--     <div class="table-responsive" *ngIf="messages"> -->
+<!--         <table class="table table-striped"> -->
+<!--             <thead> -->
+<!--             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)"> -->
+<!--             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="title"><span jhiTranslate="allSportyNewsApp.message.title">Title</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="url"><span jhiTranslate="allSportyNewsApp.message.url">Url</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="description"><span jhiTranslate="allSportyNewsApp.message.description">Description</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="fecha"><span jhiTranslate="allSportyNewsApp.message.fecha">Fecha</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="imagen"><span jhiTranslate="allSportyNewsApp.message.imagen">Imagen</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="author.id"><span jhiTranslate="allSportyNewsApp.message.author">Author</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="category.id"><span jhiTranslate="allSportyNewsApp.message.category">Category</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="parent.id"><span jhiTranslate="allSportyNewsApp.message.parent">Parent</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th></th> -->
+<!--             </tr> -->
+<!--             </thead> -->
+<!--             <tbody> -->
+<!--             <tr *ngFor="let message of messages ;trackBy: trackId"> -->
+<!--                 <td><a [routerLink]="['../message', message.id ]">{{message.id}}</a></td> -->
+<!--                 <td>{{message.title}}</td> -->
+<!--                 <td>{{message.url}}</td> -->
+<!--                 <td>{{message.description}}</td> -->
+<!--                 <td>{{message.fecha | date:'mediumDate'}}</td> -->
+<!--                 <td> -->
+<!--                     <a *ngIf="message.imagen" (click)="openFile(message.imagenContentType, message.imagen)" jhiTranslate="entity.action.open">open</a> -->
+<!--                     <span *ngIf="message.imagen">{{message.imagenContentType}}, {{byteSize(message.imagen)}}</span> -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                     {{message.author?.id}} -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                     <div *ngIf="message.category"> -->
+<!--                         <a [routerLink]="['../category', message.category?.id ]" >{{message.category?.id}}</a> -->
+<!--                     </div> -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                     <div *ngIf="message.parent"> -->
+<!--                         <a [routerLink]="['../message', message.parent?.id ]" >{{message.parent?.id}}</a> -->
+<!--                     </div> -->
+<!--                 </td> -->
+<!--                 <td class="text-right"> -->
+<!--                     <div class="btn-group flex-btn-group-container"> -->
+<!--                         <button type="submit" -->
+<!--                                 [routerLink]="['../message', message.id ]" -->
+<!--                                 class="btn btn-info btn-sm"> -->
+<!--                             <span class="fa fa-eye"></span> -->
+<!--                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span> -->
+<!--                         </button> -->
+<!--                         <button type="submit" -->
+<!--                                 [routerLink]="['/', { outlets: { popup: 'message/'+ message.id + '/edit'} }]" -->
+<!--                                 replaceUrl="true" -->
+<!--                                 queryParamsHandling="merge" -->
+<!--                                 class="btn btn-primary btn-sm"> -->
+<!--                             <span class="fa fa-pencil"></span> -->
+<!--                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span> -->
+<!--                         </button> -->
+<!--                         <button type="submit" -->
+<!--                                 [routerLink]="['/', { outlets: { popup: 'message/'+ message.id + '/delete'} }]" -->
+<!--                                 replaceUrl="true" -->
+<!--                                 queryParamsHandling="merge" -->
+<!--                                 class="btn btn-danger btn-sm"> -->
+<!--                             <span class="fa fa-remove"></span> -->
+<!--                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span> -->
+<!--                         </button> -->
+<!--                     </div> -->
+<!--                 </td> -->
+<!--             </tr> -->
+<!--             </tbody> -->
+<!--         </table> -->
+<!--     </div> -->
+    <div *ngIf="messages">
+        <div class="list-group">
+         	<a [routerLink]="['../message', message.id ]"
+         		class="list-group-item list-group-item-action flex-column
+          		align-items-start" 
+          		*ngFor="let message of messages; trackBy: trackId"> 
+                <div class="row">
+                <div class="col-2 col-xs-12 justify-content-center">
+                	<img [src]="'data:image/png;base64,' + message.imagen"
+                		style="max-height:150px;max-width:150px" alt="message imagen"/>
+                 </div>
+                 <div class="col col-xs-12">
+                 	<div class="d-flex w-100 justify-content-between">
+          				<h5 class="mb-1">{{message.title}}</h5>
+          				<small *ngIf="message.category">
+          					<a [routerLink]="['../message-category',
+           					message.category?.id ]">
+          						Categoria:{{message.category?.title}}
+          					</a>
+          				</small>
+          			
+          			</div>
+          			<small class="mb-1">{{message.description}}</small>
+          			<p class="mb-1">Autor: {{message.author?.login}}</p>
+          			<small>
+          			  	<span jhiTranslate="allSportyNewsApp.message.fecha">:
+          	    	</small>
+          			<small> 
+          			   {{message.fecha | date:'mediumDate'}}
+          			</small>
+          			
+  					<i class="fa fa-thumbs-o-up"></i>
+          			
+          		</div>
+          		</div>
+          	</a>
+          </div>
+     </div>
+<!--           message.url}}</h5></div>  <thead> -->
+<!--             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)"> -->
+<!--             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="title"><span jhiTranslate="allSportyNewsApp.message.title">Title</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="url"><span jhiTranslate="allSportyNewsApp.message.url">Url</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="description"><span jhiTranslate="allSportyNewsApp.message.description">Description</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="fecha"><span jhiTranslate="allSportyNewsApp.message.fecha">Fecha</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="imagen"><span jhiTranslate="allSportyNewsApp.message.imagen">Imagen</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="author.id"><span jhiTranslate="allSportyNewsApp.message.author">Author</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="category.id"><span jhiTranslate="allSportyNewsApp.message.category">Category</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th jhiSortBy="parent.id"><span jhiTranslate="allSportyNewsApp.message.parent">Parent</span> <span class="fa fa-sort"></span></th> -->
+<!--             <th></th> -->
+<!--             </tr> -->
+<!--             </thead> -->
+<!--             <tbody> -->
+<!--             <tr *ngFor="let message of messages ;trackBy: trackId"> -->
+<!--                 <td><a [routerLink]="['../message', message.id ]">{{message.id}}</a></td> -->
+<!--                 <td>{{message.title}}</td> -->
+<!--                 <td>{{message.url}}</td> -->
+<!--                 <td>{{message.description}}</td> -->
+<!--                 <td>{{message.fecha | date:'mediumDate'}}</td> -->
+<!--                 <td> -->
+<!--                     <a *ngIf="message.imagen" (click)="openFile(message.imagenContentType, message.imagen)" jhiTranslate="entity.action.open">open</a> -->
+<!--                     <span *ngIf="message.imagen">{{message.imagenContentType}}, {{byteSize(message.imagen)}}</span> -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                     {{message.author?.id}} -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                     <div *ngIf="message.category"> -->
+<!--                         <a [routerLink]="['../category', message.category?.id ]" >{{message.category?.id}}</a> -->
+<!--                     </div> -->
+<!--                 </td> -->
+<!--                 <td> -->
+<!--                     <div *ngIf="message.parent"> -->
+<!--                         <a [routerLink]="['../message', message.parent?.id ]" >{{message.parent?.id}}</a> -->
+<!--                     </div> -->
+<!--                 </td> -->
+<!--                 <td class="text-right"> -->
+<!--                     <div class="btn-group flex-btn-group-container"> -->
+<!--                         <button type="submit" -->
+<!--                                 [routerLink]="['../message', message.id ]" -->
+<!--                                 class="btn btn-info btn-sm"> -->
+<!--                             <span class="fa fa-eye"></span> -->
+<!--                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span> -->
+<!--                         </button> -->
+<!--                         <button type="submit" -->
+<!--                                 [routerLink]="['/', { outlets: { popup: 'message/'+ message.id + '/edit'} }]" -->
+<!--                                 replaceUrl="true" -->
+<!--                                 queryParamsHandling="merge" -->
+<!--                                 class="btn btn-primary btn-sm"> -->
+<!--                             <span class="fa fa-pencil"></span> -->
+<!--                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span> -->
+<!--                         </button> -->
+<!--                         <button type="submit" -->
+<!--                                 [routerLink]="['/', { outlets: { popup: 'message/'+ message.id + '/delete'} }]" -->
+<!--                                 replaceUrl="true" -->
+<!--                                 queryParamsHandling="merge" -->
+<!--                                 class="btn btn-danger btn-sm"> -->
+<!--                             <span class="fa fa-remove"></span> -->
+<!--                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span> -->
+<!--                         </button> -->
+<!--                     </div> -->
+<!--                 </td> -->
+<!--             </tr> -->
+<!--             </tbody> -->
+<!--         </table> -->
+<!--     </div> -->
     <div *ngIf="messages && messages.length">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>

@@ -3,14 +3,14 @@
     "allSportyNewsApp": {
         "message" : {
             "home": {
-                "title": "Messages",
-                "createLabel": "Crear nuevo Message",
-                "createOrEditLabel": "Crear o editar Message",
+                "title": "Noticias",
+                "createLabel": "Crear nueva Noticia",
+                "createOrEditLabel": "Crear o editar Noticia",
                 "search": "Search for Message"
             },
-            "created": "Un nuevo Message ha sido creado con el identificador {{ param }}",
-            "updated": "Un Message ha sido actualizado con el identificador {{ param }}",
-            "deleted": "Un Message ha sido eliminado con el identificador {{ param }}",
+            "created": "Una nueva Noticia ha sido creada con el identificador {{ param }}",
+            "updated": "Una  Noticia ha sido actualizada con el identificador {{ param }}",
+            "deleted": "Una Noticia ha sido eliminada con el identificador {{ param }}",
             "delete": {
                 "question": "¿Seguro que quiere eliminar Message {{ id }}?"
             },

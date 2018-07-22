@@ -12,9 +12,11 @@ entity Message{
 	imagen Blob required
 }
 
-entity Points
+entity Points{
+fecha LocalDate
+}
 
-
+entity ExtendedUser 
 
 relationship ManyToOne{
 	Message{author required} to User,
@@ -25,7 +27,12 @@ relationship ManyToOne{
 	Category{author required} to User
 	
 }
-
+relationship OneToOne{
+	ExtendedUser {user} to User
+}
+relationship ManyToMany{
+	ExtendedUser {categoryPreferences} to Category
+}
 //relationship OneToMany{
 //	Category{category required} to Message 
 //}

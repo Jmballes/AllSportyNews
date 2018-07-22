@@ -3,9 +3,9 @@
     "allSportyNewsApp": {
         "points" : {
             "home": {
-                "title": "Points",
-                "createLabel": "Crear nuevo Points",
-                "createOrEditLabel": "Crear o editar Points",
+                "title": "Puntuación",
+                "createLabel": "Crear Puntuaciones",
+                "createOrEditLabel": "Crear o editar Puntuaciones",
                 "search": "Search for Points"
             },
             "created": "Un nuevo Points ha sido creado con el identificador {{ param }}",
@@ -17,8 +17,9 @@
             "detail": {
                 "title": "Points"
             },
-            "person": "Person",
-            "message": "Message"
+            "fecha": "Fecha",
+            "person": "Usuario",
+            "message": "Noticia Puntuada"
         }
     }
 }

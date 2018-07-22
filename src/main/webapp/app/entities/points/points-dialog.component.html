@@ -12,6 +12,16 @@
             <input type="text" class="form-control" id="id" name="id"
                    [(ngModel)]="points.id" readonly />
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="allSportyNewsApp.points.fecha" for="field_fecha">Fecha</label>
+            <div class="input-group">
+                <input id="field_fecha" type="text" class="form-control" name="fecha" ngbDatepicker  #fechaDp="ngbDatepicker" [(ngModel)]="points.fecha"
+                />
+                <span class="input-group-append">
+                    <button type="button" class="btn btn-secondary" (click)="fechaDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+        </div>
 
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="allSportyNewsApp.points.person" for="field_person">Person</label>

@@ -1,7 +1,7 @@
 {
     "home": {
-        "title": "¡Bienvenido, Java Hipster!",
-        "subtitle": "Esta es su página de inicio",
+        "title": "¡Bienvenido a AllSportyNews!",
+        "subtitle": "El mejor agregador de Noticias Deportivas",
         "logged": {
             "message": "Está conectado como \"{{username}}\"."
         },
@@ -14,6 +14,7 @@
             "follow": "contacto @java_hipster en Twitter"
         },
         "like": "Si te gusta JHipster, danos una estrella en",
-        "github": "GitHub"
+        "github": "GitHub",
+        "usuarios": "Registraté y descubrirás más de 125 noticias agregadas y 30 tipos de categorias. Estarás informado por la mejor comunidad de usuarios."
     }
 }

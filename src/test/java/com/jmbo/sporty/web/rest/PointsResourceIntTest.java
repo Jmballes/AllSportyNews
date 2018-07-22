@@ -25,6 +25,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import static com.jmbo.sporty.web.rest.TestUtil.createFormattingConversionService;
@@ -41,6 +43,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = AllSportyNewsApp.class)
 public class PointsResourceIntTest {
+
+    private static final LocalDate DEFAULT_FECHA = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_FECHA = LocalDate.now(ZoneId.systemDefault());
 
     @Autowired
     private PointsRepository pointsRepository;
@@ -85,7 +90,8 @@ public class PointsResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Points createEntity(EntityManager em) {
-        Points points = new Points();
+        Points points = new Points()
+            .fecha(DEFAULT_FECHA);
         // Add required entity
         User person = UserResourceIntTest.createEntity(em);
         em.persist(person);
@@ -120,6 +126,7 @@ public class PointsResourceIntTest {
         List<Points> pointsList = pointsRepository.findAll();
         assertThat(pointsList).hasSize(databaseSizeBeforeCreate + 1);
         Points testPoints = pointsList.get(pointsList.size() - 1);
+        assertThat(testPoints.getFecha()).isEqualTo(DEFAULT_FECHA);
 
         // Validate the Points in Elasticsearch
         Points pointsEs = pointsSearchRepository.findOne(testPoints.getId());
@@ -155,7 +162,8 @@ public class PointsResourceIntTest {
         restPointsMockMvc.perform(get("/api/points?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(points.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(points.getId().intValue())))
+            .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())));
     }
 
     @Test
@@ -168,7 +176,8 @@ public class PointsResourceIntTest {
         restPointsMockMvc.perform(get("/api/points/{id}", points.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(points.getId().intValue()));
+            .andExpect(jsonPath("$.id").value(points.getId().intValue()))
+            .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()));
     }
 
     @Test
@@ -191,6 +200,8 @@ public class PointsResourceIntTest {
         Points updatedPoints = pointsRepository.findOne(points.getId());
         // Disconnect from session so that the updates on updatedPoints are not directly saved in db
         em.detach(updatedPoints);
+        updatedPoints
+            .fecha(UPDATED_FECHA);
 
         restPointsMockMvc.perform(put("/api/points")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -201,6 +212,7 @@ public class PointsResourceIntTest {
         List<Points> pointsList = pointsRepository.findAll();
         assertThat(pointsList).hasSize(databaseSizeBeforeUpdate);
         Points testPoints = pointsList.get(pointsList.size() - 1);
+        assertThat(testPoints.getFecha()).isEqualTo(UPDATED_FECHA);
 
         // Validate the Points in Elasticsearch
         Points pointsEs = pointsSearchRepository.findOne(testPoints.getId());
@@ -257,7 +269,8 @@ public class PointsResourceIntTest {
         restPointsMockMvc.perform(get("/api/_search/points?query=id:" + points.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(points.getId().intValue())));
+            .andExpect(jsonPath("$.[*].id").value(hasItem(points.getId().intValue())))
+            .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())));
     }
 
     @Test

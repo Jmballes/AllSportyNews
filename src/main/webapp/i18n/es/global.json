@@ -10,6 +10,7 @@
                 "category": "Category",
                 "message": "Message",
                 "points": "Points",
+                "extendedUser": "Extended User",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -131,5 +132,5 @@
         "emailexists": "Email is already in use!",
         "idexists": "A new {{entityName}} cannot already have an ID"
     },
-    "footer": "pie de página"
+    "footer": "AllSportyNews: Agregador de Noticias Deportivas. Creado por: Juan Manuel Ballesteros Ortega"
 }

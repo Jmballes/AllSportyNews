@@ -8,6 +8,7 @@ import javax.validation.constraints.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -25,6 +26,9 @@ public class Points implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "fecha")
+    private LocalDate fecha;
+
     @ManyToOne(optional = false)
     @NotNull
     private User person;
@@ -40,6 +44,19 @@ public class Points implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public Points fecha(LocalDate fecha) {
+        this.fecha = fecha;
+        return this;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 
     public User getPerson() {
@@ -93,6 +110,7 @@ public class Points implements Serializable {
     public String toString() {
         return "Points{" +
             "id=" + getId() +
+            ", fecha='" + getFecha() + "'" +
             "}";
     }
 }
