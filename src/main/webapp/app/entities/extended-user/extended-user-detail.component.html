@@ -1,0 +1,32 @@
+
+<div *ngIf="extendedUser">
+    <h2><span jhiTranslate="allSportyNewsApp.extendedUser.detail.title">Extended User</span> {{extendedUser.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="allSportyNewsApp.extendedUser.user">User</span></dt>
+        <dd>
+            {{extendedUser.user?.id}}
+        </dd>
+        <dt><span jhiTranslate="allSportyNewsApp.extendedUser.categoryPreferences">Category Preferences</span></dt>
+        <dd>
+            <span *ngFor="let categoryPreferences of extendedUser.categoryPreferences; let last = last">
+                <a [routerLink]="['/category', categoryPreferences?.id ]">{{categoryPreferences.id}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'extended-user/'+ extendedUser.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

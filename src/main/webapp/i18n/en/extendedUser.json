@@ -1,0 +1,24 @@
+
+{
+    "allSportyNewsApp": {
+        "extendedUser" : {
+            "home": {
+                "title": "Extended Users",
+                "createLabel": "Create a new Extended User",
+                "createOrEditLabel": "Create or edit a Extended User",
+                "search": "Search for Extended User"
+            },
+            "created": "A new Extended User is created with identifier {{ param }}",
+            "updated": "A Extended User is updated with identifier {{ param }}",
+            "deleted": "A Extended User is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Extended User {{ id }}?"
+            },
+            "detail": {
+                "title": "Extended User"
+            },
+            "user": "User",
+            "categoryPreferences": "Category Preferences"
+        }
+    }
+}
